@@ -15,8 +15,8 @@ class SmartWebView {
 	static boolean ASWP_FUPLOAD     = true;     //upload file from webview
 	static boolean ASWP_CAMUPLOAD   = true;     //enable upload from camera for photos
  	static boolean ASWP_MULFILE     = false;    //upload multiple files in webview; not stable yet
-	static boolean ASWP_LOCATION    = true;     //track GPS locations
-	static boolean ASWP_RATINGS     = true;     //show ratings dialog; auto configured, edit method get_rating() for customizations
+	static boolean ASWP_LOCATION    = false;     //track GPS locations
+	static boolean ASWP_RATINGS     = false;     //show ratings dialog; auto configured, edit method get_rating() for customizations
 	static boolean ASWP_PBAR        = true;     //show progress bar in app
 	static boolean ASWP_ZOOM        = false;    //zoom control for webpages view
 	static boolean ASWP_SFORM       = false;    //save form cache and auto-fill information
@@ -24,7 +24,7 @@ class SmartWebView {
 	static boolean ASWP_EXTURL      = true;     //open external url with default browser instead of app webview
 
 	//Configuration variables
-	static String ASWV_URL          = "http://mgks.infeeds.com/"; //complete URL of your website or webpage
+	static String ASWV_URL          = "http://cicero20180213112911.azurewebsites.net/"; //complete URL of your website or webpage
 	static String ASWV_F_TYPE       = "*/*";  //to upload any file type using "*/*"; check file type references for more
 
 	//Rating system variables

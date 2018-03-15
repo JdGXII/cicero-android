@@ -36,7 +36,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
+//import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -215,22 +215,42 @@ public class MainActivity extends AppCompatActivity {
                     contentSelectionIntent.setType(ASWV_F_TYPE);
                     Intent[] intentArray;
                     if (ASWP_CAMUPLOAD) {
+                    	//Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (takePictureIntent.resolveActivity(MainActivity.this.getPackageManager()) != null) {
-                            File photoFile = null;
-                            try {
-                                photoFile = create_image();
-                                takePictureIntent.putExtra("PhotoPath", asw_cam_message);
-                            } catch (IOException ex) {
-                                Log.e(TAG, "Image file creation failed", ex);
-                            }
-                            if (photoFile != null) {
-                                asw_cam_message = "file:" + photoFile.getAbsolutePath();
-                                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                            } else {
-                                takePictureIntent = null;
-                            }
-                        }
+
+
+						/*if (takeVideoIntent.resolveActivity(MainActivity.this.getPackageManager()) != null) {
+							File videoFile = null;
+							try {
+								videoFile = create_video();//create_image();
+								takeVideoIntent.putExtra("VideoPath", asw_cam_message);
+							} catch (IOException ex) {
+								Log.e(TAG, "Video file creation failed", ex);
+							}
+							if (videoFile != null) {
+								asw_cam_message = "file:" + videoFile.getAbsolutePath();
+								takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videoFile));
+							} else {
+								takePictureIntent = null;
+							}
+						}*/
+
+						if (takePictureIntent.resolveActivity(MainActivity.this.getPackageManager()) != null) {
+							File photoFile = null;
+							try {
+								photoFile = create_image();
+								takePictureIntent.putExtra("PhotoPath", asw_cam_message);
+							} catch (IOException ex) {
+								//Log.e(TAG, "Image file creation failed", ex);
+							}
+							if (photoFile != null) {
+								asw_cam_message = "file:" + photoFile.getAbsolutePath();
+								takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+							} else {
+								takePictureIntent = null;
+							}
+						}
+
                         if (takePictureIntent != null) {
                             intentArray = new Intent[]{takePictureIntent};
                         } else {
@@ -347,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
 		boolean a = true;
 		//Show toast error if not connected to the network
 		if (!ASWP_OFFLINE && !DetectConnection.isInternetAvailable(MainActivity.this)) {
-			Toast.makeText(getApplicationContext(), "Please check your Network Connection!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Porfavor revise su conneción a internet.", Toast.LENGTH_SHORT).show();
 
 			//Use this in a hyperlink to redirect back to default URL :: href="refresh:android"
 		} else if (url.startsWith("refresh:")) {
@@ -406,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
 		end = end >= 0 ? end : url.length();
 		int port = url.indexOf(':', dslash);
 		end = (port > 0 && port < end) ? port : end;
-		Log.w("URL Host: ",url.substring(dslash, end));
+		//Log.w("URL Host: ",url.substring(dslash, end));
 		return url.substring(dslash, end);
 	}
 
@@ -457,11 +477,11 @@ public class MainActivity extends AppCompatActivity {
                         cookieManager.setCookie(ASWV_URL, "long=" + longitude);
                         //Log.w("New Updated Location:", latitude + "," + longitude);  //enable to test dummy latitude and longitude
                     } else {
-                        Log.w("New Updated Location:", "NULL");
+                       // Log.w("New Updated Location:", "NULL");
                     }
                 } else {
                     show_notification(1, 1);
-                    Log.w("New Updated Location:", "FAIL");
+                    //Log.w("New Updated Location:", "FAIL");
                 }
             }
         }
@@ -491,6 +511,16 @@ public class MainActivity extends AppCompatActivity {
         File sd_directory   = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(new_name, ".jpg", sd_directory);
     }
+
+    private File create_video() throws  IOException{
+
+		@SuppressLint("SimpleDateFormat")
+		String file_name    = new SimpleDateFormat("yyyy_mm_ss").format(new Date());
+		String new_name     = "file_"+file_name+"_";
+		File sd_directory   = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+		return File.createTempFile(new_name, ".mp4", sd_directory);
+
+	}
 
     //Launching app rating dialoge [developed by github.com/hotchemi]
     public void get_rating() {
